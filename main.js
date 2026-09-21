@@ -266,7 +266,7 @@ function createInputRow(boolean = false){
     // remove scrollbar on textareas
     input1.classList.add('remove-scrollbar')
     input2.classList.add('remove-scrollbar')
-    
+
     // edit and delete buttons
     edit.classList.add('input-option','edit-option')
     del.classList.add('input-option','del-option')
@@ -325,6 +325,8 @@ function handleInput(e){
         let char = Math.abs(e.target.value.length - count_limit);
 
         getCharCount.textContent = char
+
+        console.log(char)
     // console.log(e.target.parentElement.children[0].getAttribute('for') + ":",e.target.value)
 
 }
@@ -343,10 +345,10 @@ function editCurrentInputs(add,sub,container) {
         
         let map_inputs = [...lastInput.children].filter(x=>{
             return x.tagName !== 'IMG' && x.tagName !== 'P'
-        }).map(div => [...div.children].find(element => element.tagName==='INPUT'))
+        }).map(div => [...div.children].find(element => element.tagName==='TEXTAREA'))
         
         for(let i = 0; i < map_inputs.length; i++){
-            if(map_inputs[i]){
+            console.log(map_inputs)
                 map_inputs[i].oninput = (e) => {
                 handleInput(e)
                 // check if both values are filled
@@ -359,7 +361,6 @@ function editCurrentInputs(add,sub,container) {
                     hideBtn('add');
                     showBtn('sub');
                 }
-            };
             }
         }
 
