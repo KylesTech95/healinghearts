@@ -82,7 +82,11 @@ if(document.querySelectorAll('#user-input-list-container > li')){
     
     // iterate through each li
     all_Lis.forEach((li,index) => {
-    handleLiMouseUpMouseDown(li);
+    let editOption = [...li.children].find(x=>x.classList.contains('edit-option'));
+    let delOption = [...li.children].find(x=>x.classList.contains('del-option'));
+    
+    handleRemoval(delOption)
+    handleLiMouseUpMouseDown(editOption);
 
     // box shadow effect
     boxShadowEffect(li,index)
@@ -122,7 +126,7 @@ function showBtn(type){
 function disableAllInputs(children){
     children.forEach((child,index) =>{
         let divs = [...child.children];
-        divs = divs.filter(x => x.tagName !== 'P')
+        divs = divs.filter(x => x.tagName !== 'P' && !x.classList.contains('input-option'))
         console.log(divs)
         divs.forEach(div => {
             let {children} = div;
@@ -143,7 +147,11 @@ function disableLastInputs(lastInput){
             let {children} = div;
             children[1].setAttribute('disabled',true)
         })
-        handleLiMouseUpMouseDown(lastInput);
+        let edit = [...lastInput.children].find(x=>x.classList.contains('edit-option'))
+        let del = [...lastInput.children].find(x=>x.classList.contains('del-option'))
+
+        handleRemoval(del)
+        handleLiMouseUpMouseDown(edit);
         lastInput.classList.remove('target-edit')
 }
 // get existing data (inventory | fetch)
@@ -166,7 +174,7 @@ function getExistingRows(array) {
         // iterate through children [divs]
         for(let j = 0; j < children.length; j++){
             console.log(children[j])
-            if(!children[j].classList.contains('word_count_element')){
+            if(!children[j].classList.contains('word_count_element') && !children[j].classList.contains('input-option')){
                 let label = children[j].children[0];
                 let input = children[j].children[1]
                 let label_for = label.getAttribute('for');
@@ -210,7 +218,10 @@ function createInputRow(boolean = false){
     let label2 = document.createElement('label');
     let input1 = document.createElement('input');
     let char_count = document.createElement('p');
+    let edit = document.createElement('img');
+    let del = document.createElement('img');
 
+    
     input1.type = 'text'
     input1.required = true
     let input2 = document.createElement('input');
@@ -244,13 +255,26 @@ function createInputRow(boolean = false){
 
     li.setAttribute('--data-date', convertDateToTime(new Date(Date.now()).toDateString()))
 
+    // edit and delete buttons
+    edit.classList.add('input-option','edit-option')
+    del.classList.add('input-option','del-option')
+
     // handle wordcount
     char_count.textContent = `${count_limit}`;
     char_count.classList.add('word_count_element')
 
     li.appendChild(char_count)
+    li.appendChild(del)
+    li.appendChild(edit)
+
+    // update option src
+    del.src = `del.png`
+    edit.src = `edit.png`
+
+    // del onclick
+    handleRemoval(del,true)
     // edit on mousedown
-    handleLiMouseUpMouseDown(li);
+    handleLiMouseUpMouseDown(edit);
 
     // target-edit
     !boolean ? li.classList.add('target-edit') : li.classList.remove('target-edit')
@@ -299,12 +323,18 @@ function editCurrentInputs(add,sub,container) {
         let zero = 0
         lastInput = children[zero];
         
-        let map_inputs = [...lastInput.children].filter(x=>x.tagName !== 'P').map(div => [...div.children].find(element => element.tagName==='INPUT'))
+        let map_inputs = [...lastInput.children].filter(x=>{
+            console.log(x.tagName)
+            return x.tagName !== 'IMG' && x.tagName !== 'P'
+        }).map(div => [...div.children].find(element => element.tagName==='INPUT'))
+        
         for(let i = 0; i < map_inputs.length; i++){
+            console.log(map_inputs[i])
             map_inputs[i].oninput = (e) => {
                 handleInput(e)
                 // check if both values are filled
                 let filled = inputValuesFilled(map_inputs)
+                console.log(filled)
 
                 if(filled){
                     hideBtn('sub');
@@ -323,7 +353,7 @@ function editCurrentInputs(add,sub,container) {
 function editInputs(target){    
         target.classList.add('target-edit')
         
-        let children = [...target.children].filter(x=>x.tagName!=='P');
+        let children = [...target.children].filter(x=>x.tagName!== 'P' && !x.classList.contains('input-option'));
         for(let i of children){
             let get_children = [...i.children]
             let get_inputs = get_children[1];
@@ -339,36 +369,66 @@ function editInputs(target){
         }
     
 }
-function handleLiMouseUpMouseDown(li){
+function handleRemoval(del,blank = false) {
+    
+    if(!del || !del.classList.contains('del-option')){
+        console.error('del button is missing');
+        return;
+    }
+    del.onclick = (e) => {
+        const parent = e.currentTarget.parentElement;
+        parent.remove(); // test removal
+
+        if(blank){
+        console.log(blank)
+        hideBtn('sub')
+        showBtn('add')
+    }
+    }
+}
+function handleLiMouseUpMouseDown(edit){
+    if(!edit || !edit.classList.contains('edit-option')){
+        console.error('edit button is missing');
+        return;
+    }
     const {children} = userInputListContainer
 
     // start the count on mousedown
-    li.onmousedown = (e) => {
+    edit.onclick = (e) => {
 
         let target = e.currentTarget;
-        clearInterval(interval)
-        interval = setInterval(()=>{
-            interval_count++
-            if(interval_count > 1 && interval_count < 3){
-                if(subBtn && !subBtn.classList.contains('no-display')){
+        let parent = target.parentElement;
+        // clearInterval(interval)
+        // interval = setInterval(()=>{
+        //     interval_count++
+        //     if(interval_count > 1 && interval_count < 3){
+        //         if(subBtn && !subBtn.classList.contains('no-display')){
+        //             subBtn.click()
+        //         }
+        //         disableAllInputs([...children])
+        //         parent.style = `background-color:#0f0;`
+
+        //         editInputs(parent);
+        //         interval_count = 0;
+        //         clearInterval(interval)
+        //     }
+        // },500);
+
+        if(subBtn && !subBtn.classList.contains('no-display')){
                     subBtn.click()
                 }
                 disableAllInputs([...children])
-                target.style = `background-color:#0f0;`
+                parent.style = `background-color:#0f0;`
 
-                editInputs(target);
+                editInputs(parent);
                 interval_count = 0;
                 clearInterval(interval)
-            }
-
-                
-        },500);
     }
 
     // clear interval & reset the count
-    li.onmouseup = () => {
-        clearInterval(interval)
-        interval_count = 0;
-    }
+    // edit.onclick = () => {
+    //     clearInterval(interval)
+    //     interval_count = 0;
+    // }
 }
 
