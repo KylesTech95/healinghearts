@@ -200,4 +200,5 @@ footer{
 }
 header{
     border-bottom:2px solid #000;
+    z-index: 999;
 }
