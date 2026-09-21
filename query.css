@@ -3,8 +3,11 @@
     #user-input-list-container > li, #example-li{
         flex-direction:column;
     }
-    textarea,label {
-        font-size:11pt;
+    
+
+    label{
+        text-align: end;
+        font-size:12pt;
     }
 }
 
