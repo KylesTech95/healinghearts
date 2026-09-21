@@ -42,15 +42,30 @@ window.onscroll = handleScroll
 // keydown events
 window.onkeydown = e => {
     let enter = 'Enter';
+    let del = 'Backspace';
+    let esc = 'Escape'
 
-    if(e.key === enter){
+    const {key} = e;
+
+    console.log(e.key)
+
+
+    if(key === enter){
         if(!addBtn.classList.contains('no-display')) {
-            addBtn.click()
+            addBtn.click();
+        }
+        
+    }
+
+    if(key === del || key === esc){
+        if(!subBtn.classList.contains('no-display')) {
+            subBtn.click();
         }
     }
 }
 
 
+// append existing rows to the DOM
 if(inventory.length > 0){
     let existingRows = [...getExistingRows(inventory)];
     
@@ -58,7 +73,7 @@ if(inventory.length > 0){
         existingRows.map(row => userInputListContainer.appendChild(row))
     }
 }
-
+// Edit rows
 let interval;
 let interval_count = 0;
 if(document.querySelectorAll('#user-input-list-container > li')){
@@ -263,7 +278,7 @@ function handleInput(e){
             e.target.value = e.target.value.slice(0,count_limit);
     }
 
-    let getCharCount = document.querySelector('.word_count_element');
+    let getCharCount = e.target.parentElement.parentElement.children[e.target.parentElement.parentElement.children.length - 1];
         let char = Math.abs(e.target.value.length - count_limit);
         console.log(char)
 
