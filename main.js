@@ -2,7 +2,7 @@
 const userInputListContainer = document.getElementById('user-input-list-container')
 const addBtn = document.getElementById('add-btn')
 const subBtn = document.getElementById('sub-btn')
-let count_limit = 100;
+let count_limit = 150;
 let value_limit = 3;
 let custom_date = `Sun Aug 8 2026`;
 let custom_date2 = `Sat Sep 12 2026`;
@@ -14,9 +14,9 @@ let getTime = (custom) => new Date(formatCustomDate(custom)).getTime()
 
 // database representation of accomplishments & feelings
 let inventory = [
-    {date:formatCustomDate(custom_date2),accomplishments:'some text',feelings:'idk my feelings rn'},
-    {date:formatCustomDate(custom_date),accomplishments:'i like chicken',feelings:'wowzers you look great!'},
-    {date:formatCustomDate(custom_date3),accomplishments:'bad people hurt people',feelings:'second chance'}
+    {date:formatCustomDate(custom_date2),accomplishments:'I held myself accountable by saying sorry for something I caused.',feelings:'I felt like a weight was lifted off of my shoulders'},
+    {date:formatCustomDate(custom_date),accomplishments:'I paid off my debt',feelings:'Really proud of myself'},
+    {date:formatCustomDate(custom_date3),accomplishments:'I walked away from someone who hurt me deeply',feelings:'I feel safe and secured'}
 ]
 
 
@@ -29,7 +29,12 @@ hideBtn('sub')
 // add user-input-row
 addBtn.onclick = () => {
     createInputRow(false)
-    editCurrentInputs(addBtn,subBtn,userInputListContainer)
+
+    let allLis = document.querySelectorAll('#user-input-list-container > li')[0]
+    let textarea = allLis.children[0].children[1];
+    textarea.focus();
+    editCurrentInputs(addBtn,subBtn,userInputListContainer);
+    
 
 };
 
@@ -46,8 +51,6 @@ window.onkeydown = e => {
     let esc = 'Escape'
 
     const {key} = e;
-
-    console.log(e.key)
 
 
     if(key === enter){
@@ -126,8 +129,13 @@ function showBtn(type){
 function disableAllInputs(children){
     children.forEach((child,index) =>{
         let divs = [...child.children];
+        let options = {
+            edit:divs.find(x=>x.classList.contains('edit-option')),
+            del:divs.find(x=>x.classList.contains('del-option'))
+        }
+        options.edit.classList.remove('no-display')
+
         divs = divs.filter(x => x.tagName !== 'P' && !x.classList.contains('input-option'))
-        console.log(divs)
         divs.forEach(div => {
             let {children} = div;
             children[1].setAttribute('disabled',true);
@@ -173,7 +181,6 @@ function getExistingRows(array) {
         
         // iterate through children [divs]
         for(let j = 0; j < children.length; j++){
-            console.log(children[j])
             if(!children[j].classList.contains('word_count_element') && !children[j].classList.contains('input-option')){
                 let label = children[j].children[0];
                 let input = children[j].children[1]
@@ -202,13 +209,14 @@ function getExistingRows(array) {
 // create row manually or from existing data (inventory | fetch)
 function createInputRow(boolean = false){
     const {children} = userInputListContainer
-    // disable all inputs
-    disableAllInputs([...children])
     
-    if(!boolean){
-        showBtn('sub')
-        hideBtn('add')
-    } 
+    let current_lis = [...document.querySelectorAll('#user-input-list-container > li')]
+    current_lis.map(li => {
+            let edit = [...li.children].find(x=>x.classList.contains('edit-option'));
+            edit.classList.remove('temp-block')
+    }); 
+    // disable all inputs
+    disableAllInputs([...children]);
 
     // vars
     let li = document.createElement('li');
@@ -216,16 +224,16 @@ function createInputRow(boolean = false){
     let div2 = document.createElement('div');
     let label1 = document.createElement('label');
     let label2 = document.createElement('label');
-    let input1 = document.createElement('input');
+    let input1 = document.createElement('textarea');
     let char_count = document.createElement('p');
     let edit = document.createElement('img');
     let del = document.createElement('img');
-
-    
-    input1.type = 'text'
+    // input1.type = 'text'
+    input1.rows = 3
     input1.required = true
-    let input2 = document.createElement('input');
-    input2.type = 'text'
+    let input2 = document.createElement('textarea');
+    // input2.type = 'text'
+    input2.rows = 3
     input2.required = true
 
     // if li is added manually (+ button)
@@ -255,6 +263,10 @@ function createInputRow(boolean = false){
 
     li.setAttribute('--data-date', convertDateToTime(new Date(Date.now()).toDateString()))
 
+    // remove scrollbar on textareas
+    input1.classList.add('remove-scrollbar')
+    input2.classList.add('remove-scrollbar')
+    
     // edit and delete buttons
     edit.classList.add('input-option','edit-option')
     del.classList.add('input-option','del-option')
@@ -276,8 +288,16 @@ function createInputRow(boolean = false){
     // edit on mousedown
     handleLiMouseUpMouseDown(edit);
 
+    if(!boolean){
+        showBtn('sub')
+        hideBtn('add')
+
+        edit.classList.add('no-display');
+    } 
+    
+    
     // target-edit
-    !boolean ? li.classList.add('target-edit') : li.classList.remove('target-edit')
+    !boolean ? li.classList.add('target-edit') : li.classList.remove('target-edit');
 
     return !boolean ? userInputListContainer.prepend(li) : li
 }
@@ -297,14 +317,12 @@ function removeInputRow(e){
 }
 // user input/value
 function handleInput(e){
-    console.log(e.target.value)
     if(count_limit !== Infinity && e.target.value.length > count_limit){
             e.target.value = e.target.value.slice(0,count_limit);
     }
 
-    let getCharCount = e.target.parentElement.parentElement.children[e.target.parentElement.parentElement.children.length - 1];
+    let getCharCount = [...e.target.parentElement.parentElement.children].find(element => element.tagName==='P');
         let char = Math.abs(e.target.value.length - count_limit);
-        console.log(char)
 
         getCharCount.textContent = char
     // console.log(e.target.parentElement.children[0].getAttribute('for') + ":",e.target.value)
@@ -324,17 +342,15 @@ function editCurrentInputs(add,sub,container) {
         lastInput = children[zero];
         
         let map_inputs = [...lastInput.children].filter(x=>{
-            console.log(x.tagName)
             return x.tagName !== 'IMG' && x.tagName !== 'P'
         }).map(div => [...div.children].find(element => element.tagName==='INPUT'))
         
         for(let i = 0; i < map_inputs.length; i++){
-            console.log(map_inputs[i])
-            map_inputs[i].oninput = (e) => {
+            if(map_inputs[i]){
+                map_inputs[i].oninput = (e) => {
                 handleInput(e)
                 // check if both values are filled
                 let filled = inputValuesFilled(map_inputs)
-                console.log(filled)
 
                 if(filled){
                     hideBtn('sub');
@@ -344,6 +360,7 @@ function editCurrentInputs(add,sub,container) {
                     showBtn('sub');
                 }
             };
+            }
         }
 
         
@@ -377,13 +394,24 @@ function handleRemoval(del,blank = false) {
     }
     del.onclick = (e) => {
         const parent = e.currentTarget.parentElement;
-        parent.remove(); // test removal
+        let userInput = confirm('Are you sure you want to remove this item?')
+        
+        if(userInput){
+            parent.remove();
+            let current_lis = [...document.querySelectorAll('#user-input-list-container > li')];
 
-        if(blank){
-        console.log(blank)
-        hideBtn('sub')
-        showBtn('add')
-    }
+            disableAllInputs(current_lis);
+
+            current_lis.map(li => {
+                let edit = [...li.children].find(x=>x.classList.contains('edit-option'));
+                edit.classList.remove('temp-block')
+            }); 
+            if(blank){
+                hideBtn('sub')
+                showBtn('add')
+            }
+        }
+        
     }
 }
 function handleLiMouseUpMouseDown(edit){
@@ -395,9 +423,23 @@ function handleLiMouseUpMouseDown(edit){
 
     // start the count on mousedown
     edit.onclick = (e) => {
+        // get curren li elements
+        let current_lis = [...document.querySelectorAll('#user-input-list-container > li')];
+
+        // map li elements
+        current_lis.map(li => {
+            let edit = [...li.children].find(x=>x.classList.contains('edit-option'));
+            // edit re-appears
+            edit.classList.remove('temp-block')
+        }); 
 
         let target = e.currentTarget;
         let parent = target.parentElement;
+
+        // focus on first input/textarea
+        let first_input = parent.children[0].children[1]
+        target.classList.add('temp-block')
+
         // clearInterval(interval)
         // interval = setInterval(()=>{
         //     interval_count++
@@ -423,6 +465,8 @@ function handleLiMouseUpMouseDown(edit){
                 editInputs(parent);
                 interval_count = 0;
                 clearInterval(interval)
+
+                first_input.focus();
     }
 
     // clear interval & reset the count

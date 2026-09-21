@@ -52,7 +52,9 @@ body{
     border-radius: 12px;
     position:relative;
 }
-
+.temp-block{
+    display:none;
+}
 #user-input-list-container {
     animation: liAppear .5s forwards ease-in;
 }
@@ -134,18 +136,21 @@ label{
 .enlarge-input {
     height:75px !important;
 }
-input,label {
+textarea,label {
     padding:.25rem;
     height:40px;
-
     outline:none;
-
-    font-size:12pt;
 }
 
-input {
+textarea {
+    resize:none;
     border-radius: 0 0 12px 12px;
     padding-left:1rem;
+
+    height:100% !important;
+
+    font-size:11pt;
+
 }
 #outlook-header {
     text-align: center;
@@ -163,12 +168,15 @@ input {
     cursor:pointer;
     transform:scale(1.08);
 }
+.remove-scrollbar::-webkit-scrollbar {
+    display: none;
+}
 .input-option{
     transition:.25s;
     position:absolute;
-    top:2px;
-    height:25px;
-    width:25px;
+    top:8px;
+    height:20px;
+    width:20px;
 }
 .input-option:first-child{
     left:5px;
