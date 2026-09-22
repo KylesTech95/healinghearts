@@ -496,7 +496,7 @@ function handleLiMouseUpMouseDown(edit){
         // create new image for saving data
         let newTarget = new Image()
         console.log(newTarget)
-        newTarget.src = `/done.png`;
+        newTarget.src = `done.png`;
         newTarget.classList.add('input-option','done-option');
         // append to li
         parent.appendChild(newTarget);
