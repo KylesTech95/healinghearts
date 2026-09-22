@@ -185,7 +185,7 @@ textarea {
 .input-option:first-child{
     left:5px;
 }
-.input-option:last-child{
+.input-option:last-child,.edit-option,.done-option{
     left:25px;
 }
 footer, header{

@@ -131,8 +131,10 @@ function disableAllInputs(children){
         let divs = [...child.children];
         let options = {
             edit:divs.find(x=>x.classList.contains('edit-option')),
-            del:divs.find(x=>x.classList.contains('del-option'))
+            del:divs.find(x=>x.classList.contains('del-option')),
+            save:divs.find(x=>x.classList.contains('done-option')),
         }
+
         options.edit.classList.remove('no-display')
 
         divs = divs.filter(x => x.tagName !== 'P' && !x.classList.contains('input-option'))
@@ -402,11 +404,14 @@ function handleRemoval(del,blank = false) {
             let current_lis = [...document.querySelectorAll('#user-input-list-container > li')];
 
             disableAllInputs(current_lis);
+            hideSavedIcons();
 
             current_lis.map(li => {
                 let edit = [...li.children].find(x=>x.classList.contains('edit-option'));
+                let save = [...li.children].find(x=>x.classList.contains('done-option'));
                 edit.classList.remove('temp-block')
             }); 
+
             if(blank){
                 hideBtn('sub')
                 showBtn('add')
@@ -428,52 +433,102 @@ function handleLiMouseUpMouseDown(edit){
         let current_lis = [...document.querySelectorAll('#user-input-list-container > li')];
 
         // map li elements
+        let saveItems = [...document.querySelectorAll('.done-option')]||[]
+
         current_lis.map(li => {
             let edit = [...li.children].find(x=>x.classList.contains('edit-option'));
+            let findSavedItem = saveItems.find(item=>!item.classList.contains('temp-block'));
+            if(findSavedItem){
+                handleSave()
+            }
             // edit re-appears
             edit.classList.remove('temp-block')
+            
         }); 
-
+        
+        hideSavedIcons()
         let target = e.currentTarget;
         let parent = target.parentElement;
 
         // focus on first input/textarea
         let first_input = parent.children[0].children[1]
+
         target.classList.add('temp-block')
+        
+        // create new image for saving data
+        let newTarget = new Image()
+        console.log(newTarget)
+        newTarget.src = `/done.png`;
+        newTarget.classList.add('input-option','done-option');
+        // append to li
+        parent.appendChild(newTarget);
 
-        // clearInterval(interval)
-        // interval = setInterval(()=>{
-        //     interval_count++
-        //     if(interval_count > 1 && interval_count < 3){
-        //         if(subBtn && !subBtn.classList.contains('no-display')){
-        //             subBtn.click()
-        //         }
-        //         disableAllInputs([...children])
-        //         parent.style = `background-color:#0f0;`
+        if(newTarget) {
+        newTarget.onclick = handleSave
+            
+        }
 
-        //         editInputs(parent);
-        //         interval_count = 0;
-        //         clearInterval(interval)
-        //     }
-        // },500);
 
+        
+        
         if(subBtn && !subBtn.classList.contains('no-display')){
-                    subBtn.click()
-                }
-                disableAllInputs([...children])
-                parent.style = `background-color:#0f0;`
+            subBtn.click()
+        }
+            disableAllInputs([...children])
+            parent.style = `background-color:#0f0;`
 
-                editInputs(parent);
-                interval_count = 0;
-                clearInterval(interval)
+            editInputs(parent);
+            interval_count = 0;
+            clearInterval(interval)
 
-                first_input.focus();
+            first_input.focus();
+        
     }
 
-    // clear interval & reset the count
-    // edit.onclick = () => {
-    //     clearInterval(interval)
-    //     interval_count = 0;
-    // }
 }
 
+function hideSavedIcons(){
+    let saveItems = [...document.querySelectorAll('.done-option')]||[];
+        saveItems.map(item => {
+        item.classList.add('temp-block','no-display')
+    })
+}
+
+
+function handleSave(e) {
+    let current_lis = [...document.querySelectorAll('#user-input-list-container > li')];
+
+    if(e){
+        const target = e.currentTarget;
+    let parent = target.parentElement;
+    let [edit,save] = [[...parent.children].find(x=>x.classList.contains('edit-option')),[...parent.children].find(x=>x.classList.contains('done-option'))]
+    
+    hideSavedIcons()
+
+    // confirmation prompt on saving data
+    let confirmation = confirm('Save data?');
+
+    // if true
+    if(confirmation){
+        disableAllInputs([...current_lis]);
+        edit.classList.remove('temp-block','no-display')
+        save.classList.add('temp-block');
+        // hide 
+
+    } else {
+        edit.classList.add('temp-block')
+        target.classList.remove('temp-block');
+    }
+    } else {
+        // confirmation prompt on saving data
+    let confirmation = confirm('Save data?');
+
+    // if true
+    if(confirmation){
+        disableAllInputs([...current_lis]);
+        hideSavedIcons();
+        // hide 
+
+    } 
+    }
+}
