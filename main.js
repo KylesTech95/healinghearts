@@ -22,7 +22,7 @@ let inventory = [
 
 
 // automatically hide sub-btn
-hideBtn('sub')
+if(subBtn) hideBtn('sub')
 
 
 // -----------------------------------------------------

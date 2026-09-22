@@ -1,16 +1,10 @@
 /* portrait */
 @media screen and (max-width:600px) and (max-height: 950px){
-    #user-input-list-container > li, #example-li{
-        flex-direction:column;
-    }
+  
     
 
-    label{
-        text-align: end;
-        font-size:12pt;
-    }
     #wrapper{
-        height:100% !important;
+        height:100vh !important;
     }
     #user-access-container{
         flex-direction: column;

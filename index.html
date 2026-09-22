@@ -4,71 +4,49 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="styles.css">
-    <link rel="stylesheet" href="query.css">
-    <title>Maintain a Hopeful Outlook</title>
+    <link rel="stylesheet" href="origin_query.css">
+    <title>Healing Hearts</title>
 </head>
 <body>
-
-    <header>
-        <h3>Healing Hearts</h3>
+    <!-- header -->
+     <header>
+        <a href="index.html"><h3>Healing Hearts</h3></a>
         <p>[header information]</p>
+        <!-- user access -->
+         <div id="user-access-container">
+            <a href="/login" id="login">Login</a>
+            <a href="/register" id="register">Sign Up</a>
+
+         </div>
     </header>
-    <div id="wrapper">
-        <h1 id="outlook-header">Monitor My Behavior</h1>
+
     
-    <div id="explanation" class="general-container">
-        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ullam nihil reprehenderit aliquam veniam, error accusamus eius blanditiis non, adipisci consequatur voluptatem, dolorem atque quidem corrupti odio! Necessitatibus itaque, tenetur omnis minus laborum at, architecto sunt dolore consequatur corrupti veritatis odit nihil voluptate corporis sint laboriosam voluptates modi! Fuga ipsa dolor neque unde tenetur, quia cumque vel illum harum facere minima soluta, porro expedita saepe iste aperiam. Laborum consectetur ad, voluptates corrupti totam impedit hic blanditiis, aspernatur quos ullam accusamus ipsum facilis accusantium eos molestiae. Voluptate laboriosam accusamus, hic ut unde veritatis exercitationem illum assumenda tempora eaque temporibus reiciendis consequatur ab?</p>
-    </div>
-    <div id="example" class="general-container">
-        <b>Example:</b>
-        <div class="example-sub-container">
-            <b><em>My healthy Behavioral change:</em></b>
-            <em>I want to stop blaming my situation on other people.</em>
-        </div>
-        <div class="example-sub-container">
-            <b><em>My goal:</em></b>
-            <em>To take more responsibility for my present life and future life.</em>
-        </div>
 
-        <li id="example-li">
-            
-            <div class="input-container">
-                <label for="example-text">My Accomplishment</label>
-                <textarea class="remove-scrollbar" name="example-text" disabled>I stopped blaming my mother for my lack of education and enrolled in the local college.</textarea>
-            </div>
-            <div class="input-container">
-                <label for="example-text2">How it felt</label>
-                <textarea class="remove-scrollbar" name=example-text2 disabled value=>It felt good to overcome my education obstacle. This will influence my future outlook.</textarea>
-            </div>
-        </li>
-    </div>
+    <!-- wrapper / main-content -->
+    <div id="wrapper">
+            <!-- Default/Desktop image -->
+            <img src="office.jpg" draggable="false" alt="Two arms reaching" id="reaching-hands" loading="eager">
 
-    <div style="border:2px solid transparent;height:35px;display:flex;flex-direction: column;align-items: center;justify-content: center;">
-        <hr style="width:250px;margin:.5rem auto;background:black;border:none;height:2px;">
-    </div>
 
-    <!-- <input type="text" id="test-input"> -->
+            <section id="about-section" class="general-section">
+                <h2 id="about-title">Welcome to your personal growth space</h2>
+                <p id="about-para">
+                    This tool is designed to help you track your daily accomplishments and reflect on how those moments made you feel. By capturing your wins—both big and small—and tuning into your emotions, you build a clearer picture of your progress. Think of this as a private bridge between your daily life and your therapy sessions, helping you and your therapist celebrate your growth and navigate your patterns together.
+                </p>
 
-    <div id="user-input-container" class="general-container">
-        <ol id="user-input-list-container">
-            
-        </ol>
+                <div id="cta-container">
+                    <a href="behavior.html" id="demo-cta">Try a Demo</a>
+                </div>
+            </section>
 
-        
-
-    </div>
-    <!-- add button -->
-         <button id="add-btn" class="user-interact-btn">+</button>
-         <button id="sub-btn" class="user-interact-btn">-</button>
 
     </div>
 
     <!-- footer -->
      <footer id="footer">
-        <h3>Healing Hearts</h3>
+        <a href="index.html"><h3>Healing Hearts</h3></a>
         <p>[footer information]</p>
      </footer>
-</body> 
-
-<script src="main.js" type="module"></script>
+</body>
+<script src="origin.js" type="module"></script>
 </html>
