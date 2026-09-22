@@ -2,6 +2,7 @@
     margin:0;
     padding:0;
     box-sizing: border-box;
+    list-style: none;
 }
 
 .merriweather, #cta-container>a{
@@ -52,7 +53,7 @@ footer>a,header>a{
     width:100%;
     display:flex;
     flex-direction: column;
-
+    animation: liAppear .5s forwards ease-in;
     gap:1.25rem;
 }
 #example{
@@ -70,9 +71,38 @@ footer>a,header>a{
 .temp-block{
     display:none;
 }
-#user-input-list-container {
-    animation: liAppear .5s forwards ease-in;
+header>a:hover, footer > a:hover {
+    color:#f00;
 }
+
+#guide-container{
+    height:100%;
+    width:100%;
+    
+}
+.guide-para{
+    width:100%;
+    height:100%;
+}
+
+#guide-list-container{
+    width:inherit;
+    height:inherit;
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+
+    gap:1.75rem;
+
+}
+#guide-list-container>li {
+font-size:16pt;
+display:flex;
+align-items: center;
+justify-content: center;
+gap:1.5rem;
+}
+
 .fixed-header {
     position:fixed;
     left:0;

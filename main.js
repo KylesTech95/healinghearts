@@ -307,8 +307,8 @@ function createInputRow(boolean = false){
     li.appendChild(edit)
 
     // update option src
-    del.src = `del.png`
-    edit.src = `edit.png`
+    del.src = `assets/media/del.png`
+    edit.src = `assets/media/edit.png`
 
     // del onclick
     handleRemoval(del,true)
@@ -385,7 +385,7 @@ function editCurrentInputs(add,sub,container) {
                     // create new image for saving data
                     let newTarget = new Image()
                     console.log(newTarget)
-                    newTarget.src = `/done.png`;
+                    newTarget.src = `assets/media/done.png`;
                     newTarget.classList.add('input-option','done-option');
                     // append to li
                     lastInput.appendChild(newTarget);
@@ -496,7 +496,7 @@ function handleLiMouseUpMouseDown(edit){
         // create new image for saving data
         let newTarget = new Image()
         console.log(newTarget)
-        newTarget.src = `done.png`;
+        newTarget.src = `assets/media/done.png`;
         newTarget.classList.add('input-option','done-option');
         // append to li
         parent.appendChild(newTarget);
