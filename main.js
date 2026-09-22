@@ -440,7 +440,13 @@ function handleRemoval(del,blank = false) {
         if(userInput){
             parent.remove();
             let current_lis = [...document.querySelectorAll('#user-input-list-container > li')];
-
+            
+            let starting_inputs = [...current_lis[0].children].filter(l=>l.tagName==='DIV').map(x=>x.children[1])
+            console.log(starting_inputs)
+            if(!inputValuesFilled(starting_inputs)){
+                // remove current row
+                subBtn.click();
+            }
             disableAllInputs(current_lis);
             hideSavedIcons();
 
