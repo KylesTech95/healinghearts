@@ -550,15 +550,16 @@ function handleSave(e) {
     let confirmation = confirm('Save data?');
 
     // if true
+    console.log(confirmation)
     if(confirmation){
         disableAllInputs([...current_lis]);
-        edit.classList.remove('temp-block','no-display')
+        edit.classList.remove('temp-block','no-display');
         save.classList.add('temp-block');
-        // hide 
-
-    } else {
-        edit.classList.add('temp-block')
-        target.classList.remove('temp-block');
+    }
+    if(!confirmation){
+        console.log('wtf')
+        edit.classList.add('temp-block');
+        save.classList.remove('temp-block','no-display');
     }
     } else {
         // confirmation prompt on saving data
