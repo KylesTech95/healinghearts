@@ -1,5 +1,5 @@
 /* portrait */
-@media screen and (max-width:600px) and (max-height: 950px){
+@media screen and (max-width:600px) and (max-height: 970px){
     #user-input-list-container > li, #example-li{
         flex-direction:column;
     }
@@ -14,6 +14,7 @@
     #user-access-container{
         flex-direction: column;
     }
+
      #user-access-container>a{
         font-size:11pt;
         padding:none;
@@ -25,6 +26,7 @@
         justify-content: center;
 
      }
+     
      #login {
         border-right:none;
         border-bottom:.5px solid #000;

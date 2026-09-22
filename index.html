@@ -2,6 +2,9 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,opsz,wght@0,18..144,300..900;1,18..144,300..900&display=swap" rel="stylesheet">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="origin_query.css">
@@ -10,13 +13,15 @@
 <body>
     <!-- header -->
      <header>
-        <a href="index.html"><h3>Healing Hearts</h3></a>
+        <a href="index.html"><h3 class="merriweather">Healing Hearts</h3></a>
+        <div id="cta-container" class="float-left">
+            <a href="behavior.html" id="demo-cta">Try a Demo</a>
+        </div>
         <p>[header information]</p>
         <!-- user access -->
          <div id="user-access-container">
-            <a href="/login" id="login">Login</a>
-            <a href="/register" id="register">Sign Up</a>
-
+            <a class="merriweather no-bold" href="#" id="login">Login</a>
+            <a class="merriweather no-bold" href="#" id="register">Sign Up</a>
          </div>
     </header>
 
@@ -29,7 +34,7 @@
 
 
             <section id="about-section" class="general-section">
-                <h2 id="about-title">Welcome to your personal growth space</h2>
+                <h2 id="about-title" class="merriweather">Welcome to your personal growth space</h2>
                 <p id="about-para">
                     This tool is designed to help you track your daily accomplishments and reflect on how those moments made you feel. By capturing your wins—both big and small—and tuning into your emotions, you build a clearer picture of your progress. Think of this as a private bridge between your daily life and your therapy sessions, helping you and your therapist celebrate your growth and navigate your patterns together.
                 </p>
@@ -44,7 +49,7 @@
 
     <!-- footer -->
      <footer id="footer">
-        <a href="index.html"><h3>Healing Hearts</h3></a>
+        <a href="index.html"><h3 class="merriweather">Healing Hearts</h3></a>
         <p>[footer information]</p>
      </footer>
 </body>

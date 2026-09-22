@@ -38,12 +38,12 @@ addBtn.onclick = () => {
 
 };
 
+
+
 // remove user-input-row
 subBtn.onclick = removeInputRow;
-
 // window scroll
 window.onscroll = handleScroll
-
 // keydown events
 window.onkeydown = e => {
     let enter = 'Enter';
@@ -66,6 +66,7 @@ window.onkeydown = e => {
         }
     }
 }
+
 
 
 // append existing rows to the DOM
@@ -100,13 +101,30 @@ if(document.querySelectorAll('#user-input-list-container > li')){
 
 // functions -----------------------------------------------------
 function handleScroll(e) {
+    
     let scrollY = window.scrollY;
     let header = document.querySelector('header');
+    let userAccessContainer = document.getElementById('user-access-container')
+    let userAccessChildren = [...userAccessContainer.children]
 
     if(scrollY > 0){
         header.classList.add('fixed-header');
+        header.classList.add('fixed-header');
+        for(let i in userAccessChildren){
+            userAccessChildren[i].classList.add('switch-user-access-color','alternate-user-hover');
+
+            if(userAccessChildren[i].id === 'login'){
+                userAccessChildren[i].classList.add('switch-login-border');
+
+            }
+        }
     } else {
         header.classList.remove('fixed-header');
+
+        for(let i in userAccessChildren){
+            userAccessChildren[i].classList.remove('switch-user-access-color','alternate-user-hover')
+            userAccessChildren[i].classList.remove('switch-login-border');
+        }
     }
 }
 // bod shadow effect
@@ -211,6 +229,13 @@ function getExistingRows(array) {
 // create row manually or from existing data (inventory | fetch)
 function createInputRow(boolean = false){
     const {children} = userInputListContainer
+
+    // check for current edits
+    let saveItems = [...document.querySelectorAll('.done-option')]||[]
+    let findSavedItem = saveItems.find(item=>!item.classList.contains('temp-block'));
+    if(findSavedItem){
+        handleSave()
+    }
     
     let current_lis = [...document.querySelectorAll('#user-input-list-container > li')]
     current_lis.map(li => {
@@ -357,6 +382,19 @@ function editCurrentInputs(add,sub,container) {
                 let filled = inputValuesFilled(map_inputs)
 
                 if(filled){
+                    // create new image for saving data
+                    let newTarget = new Image()
+                    console.log(newTarget)
+                    newTarget.src = `/done.png`;
+                    newTarget.classList.add('input-option','done-option');
+                    // append to li
+                    lastInput.appendChild(newTarget);
+                    
+                    if(newTarget) {
+                    newTarget.onclick = handleSave
+                        
+                    }
+                    
                     hideBtn('sub');
                     showBtn('add');
                 } else {
@@ -486,15 +524,12 @@ function handleLiMouseUpMouseDown(edit){
     }
 
 }
-
 function hideSavedIcons(){
     let saveItems = [...document.querySelectorAll('.done-option')]||[];
         saveItems.map(item => {
         item.classList.add('temp-block','no-display')
     })
 }
-
-
 function handleSave(e) {
     let current_lis = [...document.querySelectorAll('#user-input-list-container > li')];
 
