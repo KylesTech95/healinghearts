@@ -1,10 +1,12 @@
 /* portrait */
 @media screen and (max-width:600px) and (max-height: 950px){
   
-    
+    #about-section{
+    width:90%;
+    }
 
     #wrapper{
-        height:100vh !important;
+        height:100%;
     }
     #user-access-container{
         flex-direction: column;
@@ -32,6 +34,27 @@
      }
 
 /* landscape */
-/* @media screen and (max-height:420px) and (max-width: 950px){
+@media screen and (max-height:420px) and (max-width: 950px){
+#user-access-container{
+        flex-direction: column;
+    }
+     #user-access-container>a{
+        font-size:11pt;
+        padding:none;
 
-} */
+        width:105px;
+        height:33px;
+
+        align-items: end;
+        justify-content: center;
+
+     }
+     #login {
+        border-right:none;
+        border-bottom:.5px solid #000;
+     }
+     .switch-login-border{
+        border-right:none;
+        border-bottom:.5px solid #fff !important;
+        }
+}

@@ -4,6 +4,7 @@
     box-sizing: border-box;
 }
 body{
+    
     height:100%;
     width:100%;
 
@@ -31,7 +32,9 @@ footer>a,header>a{
     width:100%;
 }
 #wrapper{
-    overflow:hidden;
+    scroll-behavior: smooth;
+    overflow: scroll;
+
 
     height:100%; 
 

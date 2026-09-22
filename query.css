@@ -4,13 +4,12 @@
         flex-direction:column;
     }
     
-
     label{
         text-align: end;
         font-size:12pt;
     }
     #wrapper{
-        height:100% !important;
+        height:100%;
     }
     #user-access-container{
         flex-direction: column;
