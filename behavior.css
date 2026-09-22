@@ -158,6 +158,11 @@ gap:1.5rem;
 
     border-radius: 50%;
 }
+#guide-title{
+    width:100%;
+    text-align: center;
+    color:#000;
+}
 @keyframes popout {
     from {
         transform:scale(.5);
