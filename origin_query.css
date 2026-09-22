@@ -40,7 +40,7 @@
          border:.5px solid #000;
         }
       .float-left{
-         left:2.5px;
+         left:0px !important;
          top:0;
       }
 
